@@ -22,8 +22,8 @@
 
 // Enter a MAC address and IP address for your controller below.
 // The IP address will be dependent on your local network:
-byte mac[] = { 0x90, 0xA2, 0xDA, 0x0F, 0xBA, 0xCF };   //physical mac address
-byte ip[] = { 172, 16, 0 ,10 };                      // ip in lan (that's what you need to use in your browser. ("192.168.1.178")
+byte mac[] = { 0x90, 0xA2, 0xDA, 0x0F, 0xBA, 0xE7 };   //physical mac address
+byte ip[] = { 172, 16, 28, 46 };                      // ip in lan (that's what you need to use in your browser. ("192.168.1.178")
 byte gateway[] = { 172, 16, 0 ,1 };                   // internet access via router
 byte subnet[] = { 255, 255, 0, 0 };                  //subnet mask
 
