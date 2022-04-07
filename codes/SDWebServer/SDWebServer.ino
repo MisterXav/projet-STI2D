@@ -1,4 +1,4 @@
-//This is the basic SDFat Webserver sketch, without any modifications
+//This is the basic SDFat Webserver sketch, without any modification
 #include <SPI.h>
 #include <SdFat.h>
 #include <SdFatUtil.h>
