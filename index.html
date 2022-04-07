@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+	<meta http-equiv="Content-Type" content="text/html"; charset="utf-8"/> 
+<head>
+  <title>Valise de contrôle</title>
+  <link rel="stylesheet" type="text/css" href="Style.css">
+</head>
+
+
+<BODY>
+<header>
+    <h1>Authentification</h1>
+</header>
+<?php
+function authentifier()
+{
+  echo '<form method="POST" action="index.php">';
+  echo '<p> Utilisateur: <input type="text" name="user"/></p>';
+  echo '<p> Mot de passe : <input type="text" name="mdp"/></p>';
+  echo '</form>';
+}
+if (!isset($_POST["envoyer"]))
+{
+    demande();
+}
+elseif (empty($_POST["user"]))
+{
+    demande();
+    echo '<p> veuillez remplir les champs </p>';
+}
+elseif (empty($_POST["mdp"]))
+{
+     demande();
+    echo '<p> veuillez remplir les champs </p>';
+}
+elseif (empty($_POST["date_naissance"]))
+{
+     demande();
+    echo '<p> veuillez remplir les champs </p>';
+}
+else
+{
+   header('Location: http://localhost/AP2-SQL/Site/memo.php'); 
+}
+
+?>
+  <div id="tableau">
+  <fieldset>
+  <legend>Mini-projet de Terminale STI2D - SIN </legend>
+   <p>&nbsp;&nbsp;Ce site est le r&eacute;sultat d'un mini-projet r&eacute;alis&eacute; par des &eacute;l&egrave;ves de Terminale STI2D - SIN.</p>
+   <p> Le but de ce projet est de permettre aux &eacute;l&egrave;ves de mobiliser leurs connaissances sur la gestion d'un site web dynamique. Pour cela, il leur a 
+   &eacute;t&eacute; demand&eacute; de concevoir un site permettant d'effectuer diff&eacute;rents calculs :</p>
+   <ul>
+    <li> P&eacute;rim&egrave;tre et aire d'un rectangle en fonction de ses longueur et largeur</li>
+    <li> R&eacutesolution d'une &eacute;quation 1<sup>er</sup> degr&eacute; : ax + b = 0</li>
+    <li> R&eacutesolution d'une &eacute;quation 2<sup>nd</sup> degr&eacute; : ax<sup>2</sup> + bx + c = 0</li>
+    <li> Convertir un nombre dans les bases 10 (d&eacute;cimal), 2 (binaire) et 16 (hexad&eacute;cimal)</li>
+   </ul>
+   <p><i> Choisissez votre calcul &agrave; l'aide du menu de gauche. </i></p>
+  </fieldset>
+  </div>
+</BODY>
+</HTML>
