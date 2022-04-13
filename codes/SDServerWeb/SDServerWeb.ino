@@ -1,39 +1,42 @@
+// Programme par Xavier.
+// Permet d'envoyer une page web a partir d'un fichier htm sur une carte SD
+// Fonctionnel chez moi le 13/04
+
 #include <SPI.h>
 #include <Ethernet.h>
 #include <SD.h>
  
-// MAC address from Ethernet shield sticker under board
-byte mac[] = { 0x90, 0xA2, 0xDA, 0x0F, 0xBD, 0x16 };
-IPAddress ip(192, 168, 1, 91); // IP address, may need to change depending on network
-EthernetServer server(80);  // create a server at port 80
+byte mac[] = { 0x90, 0xA2, 0xDA, 0x0F, 0xBD, 0x16 }; // Adresse MAC du Shield Ethernet
+IPAddress ip(192, 168, 1, 91); 
+EthernetServer server(80);  // Création du serveur port 80 (site web)
  
 File webFile;
  
 void setup()
 {
-    Ethernet.begin(mac, ip);  // initialize Ethernet device
-    server.begin();           // start to listen for clients
-    Serial.begin(9600);       // for debugging
+    Ethernet.begin(mac, ip);  // initialisation des composants Ethernet
+    server.begin();           // pour les clients web
+    Serial.begin(9600);       // pour débugage
  
-    // initialize SD card
-    Serial.println("Initializing SD card...");
+    // initialisation de la carte SD
+    Serial.println("Préparation de la carte SD...");
     if (!SD.begin(4)) 
     {
-        Serial.println("ERROR - SD card initialization failed!");
+        Serial.println("ERREUR - Carte SD Non installé !");
         return;
     }
-    Serial.println("SUCCESS - SD card initialized.");
+    Serial.println("INFO - Carte SD prête.");
     if (!SD.exists("index.htm")) 
     {
-        Serial.println("ERROR - Can't find index.htm file!");
-        return;  // can't find index file
+        Serial.println("ERREUR - impossible de trouver le fichier !");
+        return;
     }
-    Serial.println("SUCCESS - Found index.htm file.");
+    Serial.println("INFO - index.html chargé.");
 }
  
 void loop()
 {
-    EthernetClient client = server.available();  // try to get client
+    EthernetClient client = server.available(); 
  
     if (client) 
     {
@@ -41,22 +44,23 @@ void loop()
         while (client.connected()) 
         {
             if (client.available()) 
-            {   // client data available to read
+            {   // données client dispo
                 char c = client.read(); 
                 if (c == '\n' && currentLineIsBlank) 
                 {
-                    // send a standard http response header
+                    // Envoie d'une réponse HTTP Standar
                     client.println("HTTP/1.1 200 OK");
                     client.println("Content-Type: text/html");
                     client.println("Connection: close");
                     client.println();
-                    // send web page
-                    webFile = SD.open("index.htm");        // open web page file
+                    // Envoie de la page web
+                    webFile = SD.open("index.htm");        // ouverture du fichier
+                    Serial.println("Page envoyé");
                     if (webFile) 
                     {
                         while(webFile.available()) 
                         {
-                            client.write(webFile.read()); // send web page to client
+                            client.write(webFile.read()); // Envoie de la page web au client
                         }
                         webFile.close();
                     }
@@ -72,9 +76,9 @@ void loop()
                     // a text character was received from client
                     currentLineIsBlank = false;
                 }
-            } // end if (client.available())
-        } // end while (client.connected())
-        delay(1);      // give the web browser time to receive the data
-        client.stop(); // close the connection
-    } // end if (client)
+            } // Fin if (client.available())
+        } // Fin while (client.connected())
+        delay(1);      // Temps pour que le navigateur récupère les données
+        client.stop(); // Fermeture de la connection
+    } // Fin if (client)
 }
